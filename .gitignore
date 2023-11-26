@@ -1,0 +1,14 @@
+.idea
+__pycache__
+.DS_Store
+statements_ingestor.conf
+.env
+.vscode
+downloader_credentials.conf
+statements_downloaded
+/env_vars.env
+/statements_we_convert
+/.venv
+!/src/ingestor/__base.py
+
+.odo
