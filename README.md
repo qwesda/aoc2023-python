@@ -5,7 +5,7 @@ This is the repository for the Advent of Code 2023 (https://adventofcode.com/202
 ### Basic rules
 
 - try to solve it by yourself first
-- this is not about speed, it is good to let the problem stew for a few hour (or days), while the brain is working on it in the background
+- this is not about speed, it is good to let the problem stew for a few hours (or days), while the brain is working on it in the background
 - ask for hints if you get stuck
 - don't use any non-standard library packages (e.g. `numpy`, `pandas`, `scipy`, `sympy`, ...)
 - don't use code assistants like github copilot, tabnine, ...
