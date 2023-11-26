@@ -12,6 +12,14 @@ This is the repository for the Advent of Code 2023 (https://adventofcode.com/202
 
 頑張ってね！
 
+### Basic setup
+
+- run the following code in the root directory of this repository to create a virtual environment and install the required packages
+
+```
+rm -Rfv .venv; /opt/homebrew/bin/python3 -m venv --prompt=\"(basename (pwd))\" .venv; source .venv/bin/activate.fish; python -m pip install --upgrade pip setuptools wheel; pip install -U -r requirements.txt
+````
+
 ### Notes on code style
 
 Consistency is very important to quickly read/parse code, follow the same style you choose everywhere!
