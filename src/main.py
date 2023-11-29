@@ -25,7 +25,7 @@ def get_problem_answer(problem_file_path: pathlib.Path, problem_data: list[str])
 def main():
     arg_parser = argparse.ArgumentParser()
 
-    arg_parser.add_argument('--user', type=str, help="who's solutions to use", choices=['stan', 'qwesda'], required=True)
+    arg_parser.add_argument('--user', type=str, help="who's solutions to use", choices=['stan', 'doga', 'qwesda'], required=True)
     arg_parser.add_argument('--problem', type=str, help='Problem to run', required=True)
 
     args = arg_parser.parse_args()
@@ -33,7 +33,7 @@ def main():
     repository_directory = pathlib.Path(__file__).parent.parent.absolute()
     current_directory = pathlib.Path(__file__).parent.absolute()
 
-    input_file_path = repository_directory / 'inputs' / f'day_{args.problem}.txt'
+    input_file_path = repository_directory / 'inputs' / args.user / f'day_{args.problem}.txt'
     solution_file_path = current_directory / 'solutions' / args.user / f'day_{args.problem}.py'
 
     if not input_file_path.exists():
