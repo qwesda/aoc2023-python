@@ -1,4 +1,5 @@
 import argparse
+import os
 import pathlib
 import importlib
 import importlib.util
@@ -44,6 +45,8 @@ def get_problem_answer(problem_file_path: pathlib.Path, problem_data: list[str],
 
 
 def main():
+    is_pycharm_debug_run = 'IPYTHONENABLE' in os.environ
+
     arg_parser = argparse.ArgumentParser()
 
     arg_parser.add_argument('--user', type=str, help="who's solutions to use", choices=['stan', 'doga', 'qwesda'], required=True)
@@ -77,11 +80,12 @@ def main():
     get_problem_answer(solution_file_path, problem_data, 'a')
     get_problem_answer(solution_file_path, problem_data, 'b')
 
-    get_problem_answer(solution_file_path, problem_data, 'a', measure_execution_time=True)
-    get_problem_answer(solution_file_path, problem_data, 'b', measure_execution_time=True)
+    if not is_pycharm_debug_run:
+        get_problem_answer(solution_file_path, problem_data, 'a', measure_execution_time=True)
+        get_problem_answer(solution_file_path, problem_data, 'b', measure_execution_time=True)
 
-    get_problem_answer(solution_file_path, problem_data, 'a', profile=True)
-    get_problem_answer(solution_file_path, problem_data, 'b', profile=True)
+        get_problem_answer(solution_file_path, problem_data, 'a', profile=True)
+        get_problem_answer(solution_file_path, problem_data, 'b', profile=True)
 
 
 if __name__ == '__main__':
