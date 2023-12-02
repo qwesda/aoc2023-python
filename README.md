@@ -45,7 +45,7 @@ rm -Rvf .env .venv; /opt/homebrew/bin/python3 -m venv --prompt="`basename $(pwd)
 ![](resources%2Fdownload_inputs.png)
 
 13) start writing your code
-![write_solution.png](resources%2Fwrite_solution.png)
+![](resources%2Fwrite_solution.png)
 
 14) execute/debug your solution with by hitting the little play or debug button in the top right part of the window
 15) have fun
