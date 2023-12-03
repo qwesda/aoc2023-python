@@ -64,9 +64,6 @@ def main():
     input_test_b_file_path = repository_directory / 'inputs' / args.user / problem_year / f'day_{problem_day}-test-b.txt'
     solution_file_path = current_directory / 'solutions' / args.user / problem_year / f'day_{problem_day}.py'
 
-    if not input_file_path.exists():
-        raise Exception(f'Input file {input_file_path.relative_to(repository_directory)} does not exist')
-
     if not solution_file_path.exists():
         raise Exception(f'Problem file {solution_file_path.relative_to(repository_directory)} does not exist')
 
@@ -76,9 +73,10 @@ def main():
     if input_test_b_file_path.exists():
         get_problem_answer(solution_file_path, load_problem_data(input_test_b_file_path), 'b', is_test=True)
 
-    problem_data = load_problem_data(input_file_path)
-    get_problem_answer(solution_file_path, problem_data, 'a')
-    get_problem_answer(solution_file_path, problem_data, 'b')
+    if input_file_path.exists():
+        problem_data = load_problem_data(input_file_path)
+        get_problem_answer(solution_file_path, problem_data, 'a')
+        get_problem_answer(solution_file_path, problem_data, 'b')
 
     if not is_pycharm_debug_run:
         get_problem_answer(solution_file_path, problem_data, 'a', measure_execution_time=True)
