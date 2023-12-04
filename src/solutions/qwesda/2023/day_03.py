@@ -93,8 +93,6 @@ def get_problem_answer_b_v1(input_data: bytes) -> str:
                     if prev_left_number_scanner is None and curr_left_number_scanner is None and next_left_number_scanner is None:
                         break
 
-                # print(f'found left numbers {prev_left_number}, {curr_left_number}, {next_left_number}')
-
                 prev_right_number_scanner, prev_right_number = '', None
                 curr_right_number_scanner, curr_right_number = '', None
                 next_right_number_scanner, next_right_number = '', None
@@ -163,9 +161,128 @@ def get_problem_answer_b_v1(input_data: bytes) -> str:
                 if next_right_number:
                     non_empty_numbers.append(next_right_number)
 
-                print(f'non_empty_numbers: {non_empty_numbers}')
-
                 if len(non_empty_numbers) == 2:
                     answer += non_empty_numbers[0] * non_empty_numbers[1]
+
+    return str(answer)
+
+
+def get_problem_answer_b_v2(input_data: bytes) -> str:
+    answer = 0
+    line_length = 0
+    input_data_length = len(input_data)
+
+    # determine line length, return '0' if no newline found
+    while True:
+        if line_length >= input_data_length:
+            return '0'
+        elif input_data[line_length] == 0x0A:
+            break
+
+        line_length += 1
+
+    line_length += 1
+
+    # iterate through the bytes until star is found, then scan for surrounding numbers
+    for pos, char in enumerate(input_data):
+        # skip new lines
+        if (pos % line_length) == 0:
+            continue
+        elif char == 0x2A:
+            if pos == 738:
+                pass
+
+            prev_number_scan_pos, prev_left_number_start = pos - line_length, None
+            curr_number_scan_pos, curr_left_number_start = pos, None
+            next_number_scan_pos, next_left_number_start = pos + line_length, None
+
+            while True:
+                if prev_number_scan_pos is not None and prev_number_scan_pos < 0:
+                    prev_number_scan_pos = None
+
+                if next_number_scan_pos is not None and next_number_scan_pos > input_data_length:
+                    next_number_scan_pos = None
+
+                if prev_number_scan_pos is not None:
+                    prev_number_scan_pos -= 1
+
+                    if 0x30 <= input_data[prev_number_scan_pos] <= 0x39:
+                        prev_left_number_start = prev_number_scan_pos
+                    else:
+                        prev_number_scan_pos = None
+
+                if curr_number_scan_pos is not None:
+                    curr_number_scan_pos -= 1
+
+                    if 0x30 <= input_data[curr_number_scan_pos] <= 0x39:
+                        curr_left_number_start = curr_number_scan_pos
+                    else:
+                        curr_number_scan_pos = None
+
+                if next_number_scan_pos is not None:
+                    next_number_scan_pos -= 1
+
+                    if 0x30 <= input_data[next_number_scan_pos] <= 0x39:
+                        next_left_number_start = next_number_scan_pos
+                    else:
+                        next_number_scan_pos = None
+
+                if prev_number_scan_pos is None and curr_number_scan_pos is None and next_number_scan_pos is None:
+                    break
+
+            prev_number_scan_pos = pos - line_length
+            next_number_scan_pos = pos + line_length
+            prev_right_number_start = None
+            curr_right_number_start = None
+            next_right_number_start = None
+
+            if prev_left_number_start is None and prev_number_scan_pos >= 0 and 0x30 <= input_data[prev_number_scan_pos] <= 0x39:
+                prev_left_number_start = prev_number_scan_pos
+            elif prev_number_scan_pos >= 0 and not (0x30 <= input_data[prev_number_scan_pos] <= 0x39):
+                prev_number_scan_pos += 1
+
+                if prev_number_scan_pos >= 0 and 0x30 <= input_data[prev_number_scan_pos] <= 0x39:
+                    prev_right_number_start = prev_number_scan_pos
+
+            if 0x30 <= input_data[pos + 1] <= 0x39:
+                curr_right_number_start = pos + 1
+
+            if next_left_number_start is None and next_number_scan_pos < input_data_length and 0x30 <= input_data[next_number_scan_pos] <= 0x39:
+                next_left_number_start = next_number_scan_pos
+            elif next_number_scan_pos < input_data_length and not (0x30 <= input_data[next_number_scan_pos] <= 0x39):
+                next_number_scan_pos += 1
+
+                if next_number_scan_pos < input_data_length and 0x30 <= input_data[next_number_scan_pos] <= 0x39:
+                    next_right_number_start = next_number_scan_pos
+
+            count_of_numbers = 0
+
+            if prev_left_number_start is not None:
+                count_of_numbers += 1
+            if prev_right_number_start is not None:
+                count_of_numbers += 1
+            if curr_left_number_start is not None:
+                count_of_numbers += 1
+            if curr_right_number_start is not None:
+                count_of_numbers += 1
+            if next_left_number_start is not None:
+                count_of_numbers += 1
+            if next_right_number_start is not None:
+                count_of_numbers += 1
+
+            if count_of_numbers == 2:
+                accumulator = 1
+
+                for scan_pos in [prev_left_number_start, prev_right_number_start, curr_left_number_start, curr_right_number_start, next_left_number_start, next_right_number_start]:
+                    if scan_pos is not None:
+                        number = 0
+
+                        while 0x30 <= input_data[scan_pos] <= 0x39:
+                            number = (input_data[scan_pos] - 0x30) + number * 10
+                            scan_pos += 1
+
+                        accumulator *= number
+
+                answer += accumulator
 
     return str(answer)
