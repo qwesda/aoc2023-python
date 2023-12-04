@@ -1,5 +1,7 @@
-def get_problem_answer_a(input_data_list: list[str]) -> str:
+def get_problem_answer_a(input_data: bytes) -> str:
     answer = 0
+
+    input_data_list = input_data.decode('utf-8').splitlines()
     non_symbols = '0123456789.'
 
     for pos_y, curr_line in enumerate(input_data_list):
@@ -45,8 +47,10 @@ def get_problem_answer_a(input_data_list: list[str]) -> str:
     return str(answer)
 
 
-def get_problem_answer_b(input_data_list: list[str]) -> str:
+def get_problem_answer_b_v1(input_data: bytes) -> str:
     answer = 0
+
+    input_data_list = input_data.decode('utf-8').splitlines()
 
     for pos_y, curr_line in enumerate(input_data_list):
         line_length = len(curr_line)

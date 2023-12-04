@@ -9,12 +9,12 @@ import timeit
 from helper import load_env
 
 
-def load_problem_data(input_file_path: pathlib.Path) -> list[str]:
-    with open(input_file_path) as f:
-        return [line.strip() for line in f]
+def load_problem_data(input_file_path: pathlib.Path) -> bytes:
+    with open(input_file_path, 'rb') as f:
+        return f.read()
 
 
-def get_problem_answer(problem_file_path: pathlib.Path, problem_data: list[str], problem_part: str, is_test=False, measure_execution_time: bool=False, profile: bool=False) -> str:
+def get_problem_answer(problem_file_path: pathlib.Path, problem_data: bytes, problem_part: str, is_test=False, measure_execution_time: bool=False, profile: bool=False) -> str:
     solution_module_spec = importlib.util.spec_from_file_location('problem', problem_file_path)
     solution_module = importlib.util.module_from_spec(solution_module_spec)
     solution_module_spec.loader.exec_module(solution_module)
@@ -35,13 +35,13 @@ def get_problem_answer(problem_file_path: pathlib.Path, problem_data: list[str],
                 else:
                     print(f'{problem_answer_function_name}() -> {problem_answer} [test]')
             elif measure_execution_time:
-                timeit_result = timeit.timeit(f'problem_answer_function(problem_data)', globals=locals(), number=1000)
-                print(f'{problem_answer_function_name}() 1k executions took -> {timeit_result:.4f} seconds')
+                timeit_result = timeit.timeit(f'problem_answer_function(problem_data)', globals=locals(), number=10000)
+                print(f'{problem_answer_function_name}() 10k executions took -> {timeit_result:.4f} seconds')
             elif profile:
                 cProfile.runctx(f'problem_answer_function(problem_data)', globals(), locals(), sort='cumtime')
 
-    if not any_problem_answer_function_found:
-        raise Exception(f'Solution file `{problem_file_path}` does not have a function that starts with `{problem_answer_function_prefix}`')
+    # if not any_problem_answer_function_found:
+    #     raise Exception(f'Solution file `{problem_file_path}` does not have a function that starts with `{problem_answer_function_prefix}`')
 
 
 def main():

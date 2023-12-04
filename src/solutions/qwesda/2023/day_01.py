@@ -1,5 +1,7 @@
-def get_problem_answer_a(input_data_list: list[str]) -> str:
+def get_problem_answer_a(input_data: bytes) -> str:
     answer = 0
+
+    input_data_list = input_data.decode('utf-8').splitlines()
 
     for input_data in input_data_list:
         input_data_length = len(input_data)
@@ -17,8 +19,12 @@ def get_problem_answer_a(input_data_list: list[str]) -> str:
     return str(answer)
 
 
-def get_problem_answer_b_v1(input_data_list: list[str]) -> str:
+def get_problem_answer_b_v1(input_data: bytes) -> str:
     answer = 0
+
+    input_data_list = input_data.decode('utf-8').splitlines()
+
+    input_data_list = input_data.decode('utf-8').splitlines()
 
     for input_data in input_data_list:
         input_data_length = len(input_data)
@@ -90,8 +96,10 @@ def get_problem_answer_b_v1(input_data_list: list[str]) -> str:
     return str(answer)
 
 
-def get_problem_answer_b_v2(input_data_list: list[str]) -> str:
+def get_problem_answer_b_v2(input_data: bytes) -> str:
     answer = 0
+
+    input_data_list = input_data.decode('utf-8').splitlines()
 
     for input_data in input_data_list:
         input_data_length = len(input_data)
@@ -181,9 +189,10 @@ def get_problem_answer_b_v2(input_data_list: list[str]) -> str:
     return str(answer)
 
 
-
-def get_problem_answer_b_v3(input_data_list: list[str]) -> str:
+def get_problem_answer_b_v3(input_data: bytes) -> str:
     answer = 0
+
+    input_data_list = input_data.decode('utf-8').splitlines()
 
     for input_data in input_data_list:
         input_data_length = len(input_data)
