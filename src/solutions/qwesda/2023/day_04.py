@@ -8,8 +8,8 @@ def get_problem_answer_a_v1(input_data: bytes) -> str:
         _, line = line.split(b':', 2)
         line_part_1, line_part_2 = line.split(b'|', 2)
 
-        winning_numbers = set([x for x in line_part_1.strip().split(b' ') if x != b''])
-        my_numbers = set([x for x in line_part_2.strip().split(b' ') if x != b''])
+        winning_numbers = set(line_part_1.split())
+        my_numbers = set(line_part_2.split())
 
         answer += int(2 ** (len(winning_numbers.intersection(my_numbers)) - 1))
 
